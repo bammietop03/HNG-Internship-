@@ -45,11 +45,14 @@ class AuthTests(APITestCase):
             data = self.user_data.copy()
             data.pop(field)
             response = self.client.post(self.register_url, data, format='json')
-            self.assertEqual(response.status_code, status.HTTP_422_UNPROCESSABLE_ENTITY)
-            self.assertIn('errors', response.data)
+            self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+            self.assertIn('status', response.data)
+            self.assertIn('message', response.data)
 
     def test_register_user_duplicate_email(self):
         self.client.post(self.register_url, self.user_data, format='json')
         response = self.client.post(self.register_url, self.user_data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_422_UNPROCESSABLE_ENTITY)
-        self.assertIn('errors', response.data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('status', response.data)
+        self.assertIn('message', response.data)
+
