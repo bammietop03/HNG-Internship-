@@ -14,6 +14,7 @@ NB: user id and email must be unique
         "phone": "string"
     }
 Provide validation for all fields. When there’s a validation error, return status code 422 with payload:
+
     {
     "errors": [
         {
@@ -38,6 +39,7 @@ The name property of the organisation takes the user’s firstName and appends �
 Logged in users can access organisations they belong to and organisations they created.
 Create an organisation model with the properties below.
 Organisation Model:
+
     {
         "orgId": "string", // Unique
         "name": "string", // Required and cannot be null
