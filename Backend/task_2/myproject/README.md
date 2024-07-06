@@ -47,6 +47,7 @@ Organisation Model:
     }
 ## Endpoints:
 #### [POST] /auth/register Registers a users and creates a default organisation Register request body:
+
     {
         "firstName": "string",
         "lastName": "string",
@@ -55,6 +56,7 @@ Organisation Model:
         "phone": "string",
     }
 Successful response: Return the payload below with a 201 success status code.
+
     {
         "status": "success",
         "message": "Registration successful",
@@ -70,6 +72,7 @@ Successful response: Return the payload below with a 201 success status code.
         }
     }
 Unsuccessful registration response:
+
     {
         "status": "Bad request",
         "message": "Registration unsuccessful",
@@ -77,11 +80,13 @@ Unsuccessful registration response:
     }
 #### [POST] /auth/login : logs in a user. When you log in, you can select an organisation to interact with
 Login request body:
+
     {
         "email": "string",
         "password": "string",
     }
 Successful response: Return the payload below with a 200 success status code.
+
     {
         "status": "success",
         "message": "Login successful",
@@ -97,6 +102,7 @@ Successful response: Return the payload below with a 200 success status code.
         }
     }
 Unsuccessful login response:
+
     {
         "status": "Bad request",
         "message": "Authentication failed",
@@ -104,6 +110,7 @@ Unsuccessful login response:
     }
 #### [GET] /api/users/:id : a user gets their own record or user record in organisations they belong to or created [PROTECTED].
 Successful response: Return the payload below with a 200 success status code.
+
     {
             "status": "success",
         "message": "<message>",
@@ -117,6 +124,7 @@ Successful response: Return the payload below with a 200 success status code.
     }
 #### [GET] /api/organisations : gets all your organisations the user belongs to or created. If a user is logged in properly, they can get all their organisations. They should not get another user’s organisation [PROTECTED].
 Successful response: Return the payload below with a 200 success status code.
+
     {
         "status": "success",
             "message": "<message>",
@@ -132,6 +140,7 @@ Successful response: Return the payload below with a 200 success status code.
     }
 #### [GET] /api/organisations/:orgId the logged in user gets a single organisation record [PROTECTED]
 Successful response: Return the payload below with a 200 success status code.
+
     {
         "status": "success",
             "message": "<message>",
@@ -143,6 +152,7 @@ Successful response: Return the payload below with a 200 success status code.
     }
 #### [POST] /api/organisations : a user can create their new organisation [PROTECTED].
 Request body: request body must be validated
+
     {
         "name": "string", // Required and cannot be null
         "description": "string",
@@ -158,6 +168,7 @@ Successful response: Return the payload below with a 201 success status code.
         }
     }
 Unsuccessful response:
+
     {
         "status": "Bad Request",
         "message": "Client error",
@@ -165,29 +176,39 @@ Unsuccessful response:
     }
 #### [POST] /api/organisations/:orgId/users : adds a user to a particular organisation
 Request body:
+
     {
         "userId": "string"
     }
 Successful response: Return the payload below with a 200 success status code.
+
     {
         "status": "success",
         "message": "User added to organisation successfully",
     }
-Unit Testing
-Write appropriate unit tests to cover
+## Unit Testing
+1.  Write appropriate unit tests to cover
 Token generation - Ensure token expires at the correct time and correct user details is found in token.
 Organisation - Ensure users can’t see data from organisations they don’t have access to.
-End-to-End Test Requirements for the Register Endpoint
+2.  End-to-End Test Requirements for the Register Endpoint
 The goal is to ensure the POST /auth/register endpoint works correctly by performing end-to-end tests. The tests should cover successful user registration, validation errors, and database constraints.
-Directory Structure:
+3.  Directory Structure:
 The test file should be named auth.spec.ext (ext is the file extension of your chosen language) inside a folder named tests . For example tests/auth.spec.ts assuming I’m using Typescript
-Test Scenarios:
+4.  Test Scenarios:
+
 It Should Register User Successfully with Default Organisation:Ensure a user is registered successfully when no organisation details are provided.
 Verify the default organisation name is correctly generated (e.g., "John's Organisation" for a user with the first name "John").
+
 Check that the response contains the expected user details and access token.
+
 It Should Log the user in successfully:Ensure a user is logged in successfully when a valid credential is provided and fails otherwise.
+
 Check that the response contains the expected user details and access token.
+
 It Should Fail If Required Fields Are Missing:Test cases for each required field (firstName, lastName, email, password) missing.
+
 Verify the response contains a status code of 422 and appropriate error messages.
+
 It Should Fail if there’s Duplicate Email or UserID:Attempt to register two users with the same email.
+
 Verify the response contains a status code of 422 and appropriate error messages.
