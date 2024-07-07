@@ -35,11 +35,8 @@ class RegisterView(generics.CreateAPIView):
             }
             return Response(data, status=status.HTTP_201_CREATED)
         else:
-            return Response({
-                'status': 'Bad request',
-                'message': 'Registration unsuccessful',
-                'statusCode': 400
-            }, status=status.HTTP_400_BAD_REQUEST)
+            errors = [{'field': field, 'message': error[0]} for field, error in serializer.errors.items()]
+            return Response({'errors': errors}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 class LoginView(generics.GenericAPIView):
     permission_classes = [AllowAny]
